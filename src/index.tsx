@@ -1,17 +1,63 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, {useState, Dispatch, SetStateAction} from 'react'
+import ReactDOM from 'react-dom'
+
+interface FeedbackProps {
+  onClickGood: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
+  onClickNeutral: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
+  onClickBad: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
+}
+
+const Feedback = ({ onClickGood, onClickNeutral, onClickBad }: FeedbackProps) => (
+  <div>
+    <h1>Give Feedback</h1>
+    <button onClick={onClickGood}>good</button>
+    <button onClick={onClickNeutral}>neutral</button>
+    <button onClick={onClickBad}>bad</button>
+  </div>
+)
+
+interface StatisticsProps {
+  good: number,
+  neutral: number,
+  bad: number
+}
+
+const Statistics = ({good, neutral, bad}: StatisticsProps) => (
+  <div>
+    <h1>Statistics</h1>
+    <p>good {good}</p>
+    <p>neutral {neutral}</p>
+    <p>bad {bad}</p>
+  </div>
+)
+
+const App = () => {
+  const [goodCount, setGoodCount] = useState(0)
+  const [neutralCount, setNeutralCount] = useState(0)
+  const [badCount, setBadCount] = useState(0)
+
+  const onClickFeedbackButton = (state: number, stateSetter: Dispatch<SetStateAction<number>>)
+  : ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) => {
+    return () => stateSetter(state + 1)
+  }
+
+  return (
+    <div>
+      <Feedback 
+        onClickGood={onClickFeedbackButton(goodCount, setGoodCount)}
+        onClickNeutral={onClickFeedbackButton(neutralCount, setNeutralCount)}
+        onClickBad={onClickFeedbackButton(badCount, setBadCount)}
+      />
+      <Statistics 
+        good={goodCount}
+        neutral={neutralCount}
+        bad={badCount}
+      />
+    </div>
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
