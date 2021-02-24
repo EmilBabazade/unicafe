@@ -23,6 +23,10 @@ interface StatisticsProps {
 }
 
 const Statistics = ({good, neutral, bad}: StatisticsProps) => {
+  if(good === 0 && neutral === 0 && bad === 0) {
+    return <p>No feedback given</p>
+  }
+
   const total = (good + neutral + bad)
   const average = total === 0 ? 0 : ( good - bad ) / total
   const positive = total === 0 ? 0 : ( good * 100 ) / total 
