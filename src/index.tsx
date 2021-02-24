@@ -6,7 +6,7 @@ interface ButtonProps {
   onClick: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
 }
 
-const Button = ({text, onClick}: ButtonProps) => <button onClick={onClick}>text</button>
+const Button = ({text, onClick}: ButtonProps) => <button onClick={onClick}>{text}</button>
 
 interface FeedbackProps {
   onClickGood: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
@@ -24,10 +24,16 @@ const Feedback = ({ onClickGood, onClickNeutral, onClickBad }: FeedbackProps) =>
 )
 
 interface StatProp {
-  text: string
+  text: string,
+  stat: string
 }
 
-const Stat = ({text}: StatProp) => <p>{text}</p>
+const Stat = ({text, stat}: StatProp) => (
+  <tr>
+    <td>{text}</td>
+    <td>{stat}</td>
+  </tr>
+)
 
 interface StatisticsProps {
   good: number,
@@ -47,11 +53,15 @@ const Statistics = ({good, neutral, bad}: StatisticsProps) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <Stat text={`good ${good}`} />
-      <Stat text={`neutral ${neutral}`} />
-      <Stat text={`bad ${bad}`} />
-      <Stat text={`average ${average}`} />
-      <Stat text={`positive ${positive}%`} />
+      <table>
+        <tbody>
+          <Stat text="good" stat={good.toString()} />
+          <Stat text="neutral" stat={neutral.toString()} />
+          <Stat text="bad" stat={bad.toString()} />
+          <Stat text="average" stat={average.toString()} />
+          <Stat text="positive" stat={positive.toString().concat('%')} />
+        </tbody>
+      </table>
     </div>
   )
 }
