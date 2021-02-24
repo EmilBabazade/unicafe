@@ -1,6 +1,13 @@
 import React, {useState, Dispatch, SetStateAction} from 'react'
 import ReactDOM from 'react-dom'
 
+interface ButtonProps {
+  text: string,
+  onClick: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+}
+
+const Button = ({text, onClick}: ButtonProps) => <button onClick={onClick}>text</button>
+
 interface FeedbackProps {
   onClickGood: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
   onClickNeutral: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void),
@@ -10,9 +17,9 @@ interface FeedbackProps {
 const Feedback = ({ onClickGood, onClickNeutral, onClickBad }: FeedbackProps) => (
   <div>
     <h1>Give Feedback</h1>
-    <button onClick={onClickGood}>good</button>
-    <button onClick={onClickNeutral}>neutral</button>
-    <button onClick={onClickBad}>bad</button>
+    <Button text="good" onClick={onClickGood} />
+    <Button text="neutral" onClick={onClickNeutral} />
+    <Button text="bad" onClick={onClickBad} />  
   </div>
 )
 
