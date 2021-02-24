@@ -23,6 +23,12 @@ const Feedback = ({ onClickGood, onClickNeutral, onClickBad }: FeedbackProps) =>
   </div>
 )
 
+interface StatProp {
+  text: string
+}
+
+const Stat = ({text}: StatProp) => <p>{text}</p>
+
 interface StatisticsProps {
   good: number,
   neutral: number,
@@ -35,17 +41,17 @@ const Statistics = ({good, neutral, bad}: StatisticsProps) => {
   }
 
   const total = (good + neutral + bad)
-  const average = total === 0 ? 0 : ( good - bad ) / total
-  const positive = total === 0 ? 0 : ( good * 100 ) / total 
+  const average = ( good - bad ) / total
+  const positive = ( good * 100 ) / total 
   
   return (
     <div>
       <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>average {average}</p>
-      <p>positive {positive}%</p>
+      <Stat text={`good ${good}`} />
+      <Stat text={`neutral ${neutral}`} />
+      <Stat text={`bad ${bad}`} />
+      <Stat text={`average ${average}`} />
+      <Stat text={`positive ${positive}%`} />
     </div>
   )
 }
